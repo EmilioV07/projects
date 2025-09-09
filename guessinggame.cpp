@@ -18,51 +18,46 @@ int Guessing()
 	cin >> guess;
 	if (100 < guess < 0)
 	  {
-	    cout << "Number out of range, please choose a different number.";
+	    cout << "Number out of range, please choose a different number.\n";
 	  }
 	if (101 > guess > -1)
 	  {
 	    guessvalid = true;
 	  }
       }
-    return 0;
+    return guess;
   }
 
 int main()
 {
-  
-  
-  int number = 10;
+  int randnum = 10;//make random later
   int turns;
-  int guess;
-  bool guessvalid = false;
+  int guessnum = Guessing();
   bool guessright = false;
-  int guessing;
   
   while (guessright == false)
     {
-      
-      if (100 < guess < 0)
+      if (100 < guessnum < 0)
 	{
-	  cout << "Number out of range, guess again.";
+	  cout << "Number out of range, guess again.\n";
 	  turns += 1;
-	  Guessing();
+	  guessnum = Guessing();
 	}
-      if (guess > number)
+      if (guessnum > randnum)
 	{
-	  cout << "Number too high, guess again";
+	  cout << "Number too high, guess again\n";
 	  turns += 1;
-	  Guessing();
+	  guessnum = Guessing();
 	}
-      if (guess < number)
+      if (guessnum < randnum)
 	{
-	  cout << "Number too low, guess again";
+	  cout << "Number too low, guess again\n";
 	  turns += 1;
-	  Guessing();
+	  guessnum = Guessing();
 	}
-      if (guess == number)
+      if (guessnum == randnum)
 	{
-	  cout << "You guessed correctly, you win!";
+	  cout << "You guessed correctly, you win!\n";
 	  turns += 1;
 	  cout << "You took " << turns << " turns.";
 	  guessright = true;
