@@ -6,6 +6,8 @@ Citations:
 */
 #include <iostream>
 #include <random>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 int Guessing()
@@ -34,6 +36,8 @@ int main()
   int turns;
   int guessnum = Guessing();
   bool guessright = false;
+  char answer;
+  
   
   while (guessright == false)
     {
@@ -60,7 +64,19 @@ int main()
 	  cout << "You guessed correctly, you win!\n";
 	  turns += 1;
 	  cout << "You took " << turns << " turns.";
-	  guessright = true;
+	  turns = 0;
+	  cout << "\nWould you like to play again? (y/n): ";
+	  if (cin >> answer && answer == 'y')
+	    {
+	      main();
+	    }
+	  if (cin >> answer && answer == 'n')//fix
+	    {
+	      cout << "\nThanks for playing!";
+	      return 0;
+	    }
+       
+	  //guessright = true;
 	}
     }
   return 0;
