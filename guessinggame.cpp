@@ -1,8 +1,18 @@
 /*
 Emilio Vasquez-Pettit
 09/05/2025
+Guessing Game
+
+In this program, the computer chooses a random number in the range 0 - 100 inclusive, and the user has to guess the number in a series of attempts. The program will give feedback to the user regarding their guess being too high or too low, and tells the user if their guess is correct. If the user guesses correctly, they are prompted to play the game again with a new (hopefully) random number.
+
 Citations:
-1. 
+1.
+
+3 RULES OF C++ CLASS
+1. Treat your teachers and classmates with respect.
+2. Be safe.
+3. Use your class time well.
+I hope these are the three rules required.
 */
 #include <iostream>
 #include <random>
@@ -12,7 +22,7 @@ using namespace std;
 
 int Guessing()
   {
-    int guess;
+    int guess = 0;
     bool guessvalid = false;
     while (guessvalid == false)
       {
@@ -32,51 +42,49 @@ int Guessing()
 
 int main()
 {
-  int randnum = 10;//make random later
-  int turns;
-  int guessnum = Guessing();
+  srand(time(NULL));
+  int randnum = rand()%100;
+  int turns = 0;
   bool guessright = false;
   char answer;
   
-  
   while (guessright == false)
     {
+      int guessnum = Guessing();
       if (100 < guessnum < 0)
 	{
 	  cout << "Number out of range, guess again.\n";
 	  turns += 1;
-	  guessnum = Guessing();
 	}
-      if (guessnum > randnum)
+      else if (guessnum > randnum)
 	{
 	  cout << "Number too high, guess again\n";
 	  turns += 1;
-	  guessnum = Guessing();
 	}
-      if (guessnum < randnum)
+      else if (guessnum < randnum)
 	{
 	  cout << "Number too low, guess again\n";
 	  turns += 1;
-	  guessnum = Guessing();
 	}
-      if (guessnum == randnum)
+      else if (guessnum == randnum)
 	{
 	  cout << "You guessed correctly, you win!\n";
 	  turns += 1;
 	  cout << "You took " << turns << " turns.";
-	  turns = 0;
 	  cout << "\nWould you like to play again? (y/n): ";
-	  if (cin >> answer && answer == 'y')
+	  cin >> answer;
+	  if (answer == 'y')
 	    {
+	      guessright = true;
+	      answer = '\0';
+	      turns = 0;
 	      main();
 	    }
-	  if (cin >> answer && answer == 'n')//fix
+	  else if (answer == 'n')
 	    {
 	      cout << "\nThanks for playing!";
-	      return 0;
+	      guessright = true;
 	    }
-       
-	  //guessright = true;
 	}
     }
   return 0;
