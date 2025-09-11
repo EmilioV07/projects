@@ -12,9 +12,9 @@ Provided number randomization code.
 3. CodeHS Documentation used for syntax refresher.
 
 3 RULES OF C++ CLASS
-1. Treat your teachers and classmates with respect.
-2. Be safe.
-3. Use your class time well.
+1. No global variables
+2. No strings
+3. Include <iostream> over stdio & use "new" and "delete" over "malloc" and "free"
 I hope these are the three rules required.
 */
 #include <iostream>
