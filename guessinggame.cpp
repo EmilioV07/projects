@@ -6,7 +6,10 @@ Guessing Game
 In this program, the computer chooses a random number in the range 0 - 100 inclusive, and the user has to guess the number in a series of attempts. The program will give feedback to the user regarding their guess being too high or too low, and tells the user if their guess is correct. If the user guesses correctly, they are prompted to play the game again with a new (hopefully) random number.
 
 Citations:
-1.
+1. friend: Dylan Waters, class: C++, Per. 1
+Provided number randomization code.
+2. All teacher help & Google Search AI provision of '\0' for setting char variables to nothing.
+3. CodeHS Documentation used for syntax refresher.
 
 3 RULES OF C++ CLASS
 1. Treat your teachers and classmates with respect.
