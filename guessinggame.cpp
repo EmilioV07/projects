@@ -22,12 +22,12 @@ I hope these are the three rules required.
 #include <cstdlib>
 #include <ctime>
 using namespace std;
-
-int Guessing()
+//namespace and inclusions for random, time, and quality of life
+int Guessing()//guessing function that returns validated guess to main as "guessnum"
   {
-    int guess = 0;
+    int guess = 0;//local guess variable to Guessing()
     bool guessvalid = false;
-    while (guessvalid == false)
+    while (guessvalid == false)//repeats validation procedure until conditional true and returns
       {
 	cout << "Enter an integer from 0 to 100 inculsive: ";
 	cin >> guess;
@@ -45,16 +45,16 @@ int Guessing()
 
 int main()
 {
-  srand(time(NULL));
-  int randnum = rand()%100;
-  int turns = 0;
-  bool guessright = false;
-  char answer;
+  srand(time(NULL));//seeds random in the current time for certified random random every time
+  int randnum = rand()%100;//random number to guess, mod 100 to keep in the 0-100 range
+  int turns = 0;//variable to keep track of how many attempts were made
+  bool guessright = false;//bool to end main game loop
+  char answer;//stores answer to restart or end program/game
   
-  while (guessright == false)
+  while (guessright == false)//main game loop
     {
-      int guessnum = Guessing();
-      if (100 < guessnum < 0)
+      int guessnum = Guessing();//grabs user input/guess
+      if (100 < guessnum < 0)//conditionals return feedback to user on higher, lower, or win, which prompts a new game or to end the program
 	{
 	  cout << "Number out of range, guess again.\n";
 	  turns += 1;
@@ -75,18 +75,18 @@ int main()
 	  turns += 1;
 	  cout << "You took " << turns << " turns.";
 	  cout << "\nWould you like to play again? (y/n): ";
-	  cin >> answer;
+	  cin >> answer;//gets user preference
 	  if (answer == 'y')
 	    {
 	      guessright = true;
 	      answer = '\0';
-	      turns = 0;
-	      main();
+	      turns = 0;//resets turns and answer so new game has fresh score and input
+	      main();//restarts game
 	    }
 	  else if (answer == 'n')
 	    {
 	      cout << "\nThanks for playing!";
-	      guessright = true;
+	      guessright = true;//ends game loop and thanks for playing
 	    }
 	}
     }
