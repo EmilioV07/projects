@@ -13,5 +13,13 @@ using namespace std;
 
 int main()
 {
-  
+  //x = len(input)
+  char str[x];
+  cin >> str;
+  cout << str << endl;
+  //for i in range(x):
+  ////str.strip()
+  //for i in range(x);
+  //strcmp
+  return 0;
 }
