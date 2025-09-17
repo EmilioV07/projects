@@ -6,7 +6,8 @@ Palindrome
 This program reads a series of characters (max of 80), removes all punctuation and spaces, and returns whether or not the stripped input is a palindrome or not (same read backwards as forwards).
 
 Citations:
-
+1. W3 schools c++ for loop documentation
+2. 
 */
 #include <iostream>
 using namespace std;
@@ -14,9 +15,16 @@ using namespace std;
 int main()
 {
   //x = len(input)
-  char str[x];
+  char str[80];
   cin >> str;
-  cout << str << endl;
+  for (int i = 0; i < 80; i++)
+    {
+      if (str[i].isalpha())
+	{
+	  str[i].delete();
+	}
+    }
+  cout << str << endl
   //for i in range(x):
   ////str.strip()
   //for i in range(x);
