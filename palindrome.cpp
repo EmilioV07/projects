@@ -19,12 +19,12 @@ int main()
   cin >> str;
   for (int i = 0; i < 80; i++)
     {
-      if (str[i].isalpha())
+      if (isalpha(str[i]) != 0)
 	{
 	  str[i].delete();
 	}
     }
-  cout << str << endl
+  cout << str << endl;
   //for i in range(x):
   ////str.strip()
   //for i in range(x);
