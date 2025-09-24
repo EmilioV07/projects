@@ -10,24 +10,38 @@ Citations:
 2. 
 */
 #include <iostream>
+#include <cstring>
+#include <algorithm>//CITE ZACH
 using namespace std;
 
 int main()
 {
-  //x = len(input)
-  char str[80];
-  cin >> str;
-  for (int i = 0; i < 80; i++)
+  char str[80] = "\0";
+  char strpstr[80] = "\0";
+  bool inputting = true;
+  while (inputting == true)//GRABS & VALIDATES USER INPUT
+    {
+      cin >> str;
+      if (strlen(str) > 80)
+	{
+	  cout << "Input too large, please stay under 80 characters";
+	}
+      else if (strlen(str) <= 80)
+	{
+	  inputting = false;
+	}
+    }
+  int count = 0;//seperate count for adding to the strpstr array
+  for (int i = 0; i < strlen(str); i++)//STRIPS/CLEANS INPUT
     {
       if (isalpha(str[i]) != 0)
 	{
-	  str[i].delete();
+	  strpstr[count] = str[i];
+	  count += 1;
 	}
     }
-  cout << str << endl;
-  //for i in range(x):
-  ////str.strip()
-  //for i in range(x);
-  //strcmp
+  cout << strpstr << endl;
+  
+  //cout << reverse(strpstr)
   return 0;
 }
