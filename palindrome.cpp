@@ -12,22 +12,23 @@ Citations:
 #include <iostream>
 #include <cstring>
 #include <algorithm>//CITE ZACH
+#include <cctype>
 using namespace std;
 
 int main()
 {
-  char str[80] = "\0";
-  char strpstr[80] = "\0";
-  char rvrsstr[80] = "\0";
+  char str[81] = "\0";
+  char strpstr[81] = "\0";
+  char rvrsstr[81] = "\0";
   bool inputting = true;
   while (inputting == true)//GRABS & VALIDATES USER INPUT
     {
       cin >> str;
-      if (strlen(str) <= 80)
+      if (strlen(str) <= 81)
 	{
 	  inputting = false;
 	}
-      else if (strlen(str) > 80)
+      else if (strlen(str) > 81)
 	{
 	  cout << "Input too large, please stay under 80 characters" << endl;
 	}
@@ -42,8 +43,13 @@ int main()
 	  count += 1;
 	}
     }
-  //MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE
-  strcpy(rvrsstr, str);//copies stripped input into new array to be reversed and compared
+
+  for (int i = 0; i < strlen(str); i++)//makes stripped input all lowercase for comparison
+    {
+      strpstr[i] = tolower(strpstr[i]);
+    }
+  
+  strcpy(rvrsstr, strpstr);//copies stripped input into new array to be reversed and compared
   reverse(rvrsstr, rvrsstr + strlen(rvrsstr));//reverses copied array for comparison 
 
   if (strcmp(strpstr, rvrsstr) == 0)//compares strings and lets the user know whether or not the input is a palindrome
