@@ -7,7 +7,7 @@ This program reads a series of characters (max of 80), removes all punctuation a
 
 Citations:
 1. W3 schools c++ for loop documentation
-2. 
+2. Classmate: Zach Tobin, class: C++ Programming DC Per. 1
 */
 #include <iostream>
 #include <cstring>
@@ -18,19 +18,21 @@ int main()
 {
   char str[80] = "\0";
   char strpstr[80] = "\0";
+  char rvrsstr[80] = "\0";
   bool inputting = true;
   while (inputting == true)//GRABS & VALIDATES USER INPUT
     {
       cin >> str;
-      if (strlen(str) > 80)
-	{
-	  cout << "Input too large, please stay under 80 characters";
-	}
-      else if (strlen(str) <= 80)
+      if (strlen(str) <= 80)
 	{
 	  inputting = false;
 	}
+      else if (strlen(str) > 80)
+	{
+	  cout << "Input too large, please stay under 80 characters" << endl;
+	}
     }
+  
   int count = 0;//seperate count for adding to the strpstr array
   for (int i = 0; i < strlen(str); i++)//STRIPS/CLEANS INPUT
     {
@@ -40,8 +42,19 @@ int main()
 	  count += 1;
 	}
     }
-  cout << strpstr << endl;
+  //MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE MAKE SAME CASE
+  strcpy(rvrsstr, str);//copies stripped input into new array to be reversed and compared
+  reverse(rvrsstr, rvrsstr + strlen(rvrsstr));//reverses copied array for comparison 
+
+  if (strcmp(strpstr, rvrsstr) == 0)//compares strings and lets the user know whether or not the input is a palindrome
+    {
+      cout << rvrsstr << endl;
+      cout << "Palindrome" << endl;
+    }
+  else if (strcmp(strpstr, rvrsstr) != 0)
+    {
+      cout << "Not a palindrome." << endl;
+    }
   
-  //cout << reverse(strpstr)
   return 0;
 }
