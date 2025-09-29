@@ -8,10 +8,13 @@ This program reads a series of characters (max of 80), removes all punctuation a
 Citations:
 1. W3 schools c++ for loop documentation
 2. Classmate: Zach Tobin, class: C++ Programming DC Per. 1
+<algorithm> for reversing string
+3. Microsoft Copilot
+documentation for strcpy, reverse() syntax, and typo pointouts not mentioned in compiler as error (ex accidental str instead of strpstr)
 */
 #include <iostream>
 #include <cstring>
-#include <algorithm>//CITE ZACH
+#include <algorithm>
 #include <cctype>
 using namespace std;
 
