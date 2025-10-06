@@ -2,7 +2,10 @@
 Emilio Vasquez-Pettit
 10/02/2025
 
-This program runs a two playerg game of TicTacToe in the console.
+This program runs a two player game of TicTacToe in the console.
+
+Citations:
+1. MS Copilot
 
 */
 #include <iostream>
@@ -10,16 +13,42 @@ This program runs a two playerg game of TicTacToe in the console.
 
 using namespace std;
 
-int checkwin(turn, board)
+int checkwin(char board[3][3], int turn)
 {
-  return 0
+  return 0;
 }
+int print_board(char board[3][3], int turn)
+  {
+    cout << endl;
+    if (turn == 1)
+      {
+	cout << "X's turn" << endl;
+      }
+    else if (turn == -1)
+      {
+	cout << "O's turn" << endl;
+      }
+    cout << "  " << "0" << " " << "1" << " " << "2" << endl;
+    for (int i = 0; i < 3; i++)
+      {
+	cout << i << " " << board[i][0] << " " << board[i][1] << " " << board[i][2] << endl;
+      }
+    return 0;
+  }
 
 int main()
 {
   int turn = 1;
   bool winner = false;
-  int arr[0] = 0;
+  char board[3][3] = {{'-','-','-'},{'-','-','-'},{'-','-','-'}};
+
+  //function declarations
+  int print_board(char board[3][3], int turn);
+  int checkwin(char board[3][3], int turn);
+  //setting up the board
+  cout << "Welcome to Tic Tac Toe" << endl;
+  print_board(board, turn);
+  
 }
 
 /*
