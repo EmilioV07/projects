@@ -30,12 +30,12 @@ bool checkwin(char board[3][3], int turn)//win detection, iterates through rows 
 	}
     }
   //check diagonals
-  else if (board[0][0] == board[1][1] == board[2][2] ** board [0][0] != '-')
+  if (board[0][0] == board[1][1] == board[2][2] && board [0][0] != '-')
     {
       cout << board[0][0] << " wins!" << endl;
       return true;
     }
-  else if (board[0][2] == board[1][1] == board[2][0] ** board [0][2] != '-')
+  else if (board[0][2] == board[1][1] == board[2][0] && board [0][2] != '-')
     {
       cout << board[0][2] << " wins!" << endl;
       return true;
