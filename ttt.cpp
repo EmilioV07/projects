@@ -13,7 +13,7 @@ Citations:
 
 using namespace std;
 
-bool checkwin(char board[3][3], int turn)//win detection, iterates through rows and columns, then checks both diagonals manually
+bool checkwin(char board[3][3])//win detection, iterates through rows and columns, then checks both diagonals manually
 {
   //check horizontals and verticals
   for (int i = 0; i < 3; i++)
@@ -41,13 +41,9 @@ bool checkwin(char board[3][3], int turn)//win detection, iterates through rows 
       return true;
     }
   //check tie
-  
-  /*
-  if "-" not in board[0][0] and "-" not in board[0][1] and "-" not in board[0][2] and "-" not in board[1][0] and "-" not in board[1][1] and "-" not in board[1][2] and "-" not in board[2][0] and "-" not in board[2][1] and "-" not in board[2][2] and winner == False:
-  */
   return false;
 }
-int print_board(char board[3][3], int turn)
+int printboard(char board[3][3], int turn)
   {
     cout << endl;
     if (turn == 1)
@@ -66,67 +62,78 @@ int print_board(char board[3][3], int turn)
     return 0;
   }
 
-bool isvalidmove(row, col)//checks if the player's move choice is valid (not overwriting an existing move of either player)
+bool isvalidmove(int row, int col)//checks if the player's move choice is valid (not overwriting an existing move of either player)
 {
-  //add range check
-  return board[row][col] == '-';//copilot simplification suggestion of an if and else compared to simply returning bool result of existing comparison
+  int row, col;
+  if (-1 < col < 3 && -1 < row < 3)//range check
+    {
+      return false;
+    }
+  if (board[row][col] == '-')
+    {
+      return true;
+    }
+  else
+    {
+      return false;
+    }
+}
+//places player mark on the board
+int placeplayer(int row, int col)
+{
+  if (turn == -1)
+    {
+      board[row][col] = "O";
+    }
+  else if (turn == 1)
+    {
+      board[row][col] = "X";
+    }
+  return 0;
+}
+
+int taketurn(char board[3][3], int turn, bool &winner)
+{
+  while (playing == true)
+    {
+      int row = cin >> "Enter a row (0, 1, 2): " >> endl;
+      int col = cin >> "Enter a column (0, 1, 2): " >> endl;
+      if (isvalidmove(row, col) == true)
+        {
+          placeplayer(row, col);
+	  turn = turn * -1;//goes before printboard() so that the board is printed with the correct player's turn
+          printboard(board, turn);
+	  if (checkwin(board) == true)
+	    {
+	      winner = true;
+	      playing = false;
+	    }
+        }
+      else if (isvalidmove(row, col) == false)
+	{
+	  cout << "That spot has been marked or is out of range, choose another spot" << endl;
+	}
+    }
+  return 0;
 }
 
 int main()
 {
-  int turn = 1;
+  int turn = 1;//holds player turn as 1 r -1 (multiplied by -1 to flip)
   bool winner = false;
   char board[3][3] = {{'-','-','-'},{'-','-','-'},{'-','-','-'}};
 
   //function declarations
   int print_board(char board[3][3], int turn);
-  bool checkwin(char board[3][3], int turn);
-  bool isvalidmove(row, col);
+  bool checkwin(char board[3][3]);
+  bool isvalidmove(int row, int col);
+  int placeplayer(int row, int col);
+  int taketurn(char board[3][3],int turn, bool winner);
   
   //setting up the board
-  while (playing == true)
-    {
-      turn = 1;
-      winner = false;
-      cout << " Welcome to Tic Tac Toe" << endl;
-      print_board(board, turn);
-      taketurn(board, turn);
-    }
+  turn = 1;
+  winner = false;
+  cout << " Welcome to Tic Tac Toe" << endl;
+  printboard(board, turn);
+  taketurn(board, turn, winner);
 }
-
-
-
-/*
-
-#places player on row,col on the board
-def place_player(row, col):
-    global turn
-    if turn == -1:
-        board[row][col] = "O"
-    elif turn == 1:
-        board[row][col] = "X"
-#Asks the user to enter a row and col until the user enters a valid location
-#Adds user location to the board, and prints the board
-def take_turn():
-    global turn
-    global winner
-    while True:
-        row = int(input("Enter a row (0,1,2): "))
-        col = int(input("Enter a column(0,1,2): "))
-        if is_valid_move(row, col) == True:
-            place_player(row, col)
-            turn = turn*-1
-            print_board()
-            if check_win() == True:
-                return
-                break
-            elif check_win() == False:
-                take_turn()
-        elif is_valid_move(row, col) == False:
-            print("That spot has been marked, choose another spot")
-            continue
-#Program Start
-print(" Welcome to Tic-Tac-Toe!")
-print_board()
-take_turn()
-*/
