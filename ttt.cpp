@@ -55,15 +55,42 @@ bool checkwin(char (&board)[3][3], int &scorex, int &scoreo)//win detection, ite
   //check diagonals
   if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board [0][0] != '-')
     {
-      cout << board[0][0] << " wins!" << endl;
-      return true;
+      if (board[0][0] == 'X')
+            {
+              cout << "X wins!";
+              scorex +=1;
+              return true;
+            }
+          else if (board[0][0] == 'O')
+            {
+              cout << "O wins!" << endl;
+              scoreo += 1;
+              return true;
+            }
     }
   else if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board [0][2] != '-')
     {
-      cout << board[0][2] << " wins!" << endl;
-      return true;
+      if (board[0][2] == 'X')
+            {
+              cout << "X wins!";
+              scorex +=1;
+              return true;
+            }
+          else if (board[0][2] == 'O')
+            {
+              cout << "O wins!" << endl;
+              scoreo += 1;
+              return true;
+            }
     }
-  //check tie
+  //check tie (manually and inefficiently, but effective)
+  else if (board[0][0] == '-' && board[0][1] == '-' && board[0][2] == '-' &&
+	   board[1][0] == '-' && board[1][1] == '-' && board[1][2] == '-' &&
+	   board[2][0] == '-' && board[2][1] == '-' && board[2][2] == '-')
+    {
+      cout << "Tie!" << endl;//no score change (could be +0.5 like in chess, but I already have the scores as integers everywhere)
+      return true;//technically not a true win, but triggers the next round.
+    }
   return false;
 }
 int printboard(char (&board)[3][3], int &turn, int &scorex, int &scoreo)
@@ -167,7 +194,7 @@ int main()
   int scorex = 0;
   int scoreo = 0;
   int turn = 1;//holds player turn as 1 r -1 (multiplied by -1 to flip)
-  bool winner = false;
+  bool winner = false;//I don't believe winner is used anywhere important (translation residual), but I feel removing it would be a bad omen.
   bool playing = true;
   char board[3][3] = {{'-','-','-'},{'-','-','-'},{'-','-','-'}};
 
@@ -179,9 +206,9 @@ int main()
   int taketurn(char (&board)[3][3],int &turn, bool &winner, bool &playing, int &scorex, int &scoreo);
   
   //setting up the board
-  turn = 1;
-  winner = false;
-  cout << " Welcome to Tic Tac Toe" << endl;
-  printboard(board, turn, scorex, scoreo);
-  taketurn(board, turn, winner, playing, scorex, scoreo);
+  turn = 1;//sets first move to X
+  winner = false;//don't touch
+  cout << " Welcome to Tic Tac Toe" << endl;//welcome message
+  printboard(board, turn, scorex, scoreo);//prints board for first time
+  taketurn(board, turn, winner, playing, scorex, scoreo);//starts game loop
 }
