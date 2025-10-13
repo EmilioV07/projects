@@ -53,7 +53,7 @@ bool checkwin(char (&board)[3][3], int &scorex, int &scoreo)//win detection, ite
 	}
     }
   //check diagonals
-  if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board [0][0] != '-')
+  if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != '-')
     {
       if (board[0][0] == 'X')
             {
@@ -68,7 +68,7 @@ bool checkwin(char (&board)[3][3], int &scorex, int &scoreo)//win detection, ite
               return true;
             }
     }
-  else if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board [0][2] != '-')
+  else if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != '-')
     {
       if (board[0][2] == 'X')
             {
