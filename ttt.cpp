@@ -2,31 +2,54 @@
 Emilio Vasquez-Pettit
 10/02/2025
 
-This program runs a two player game of TicTacToe in the console.
+This program runs a two player game of TicTacToe in the console and keeps the score between X and O.
 
 Citations:
 1. MS Copilot
-
+Proper syntax reference and scoping information for variables (program practically translated from AI TicTacToe assignment)
+2. Existing Personal Work
+Heavy logical inspiration from my own existing TicTacToe assignments (for Python and AI)
 */
 #include <iostream>
 #include <cstring>
 
 using namespace std;
 
-bool checkwin(char (&board)[3][3])//win detection, iterates through rows and columns, then checks both diagonals manually
+bool checkwin(char (&board)[3][3], int &scorex, int &scoreo)//win detection, iterates through rows and columns, then checks both diagonals manually
 {
   //check horizontals and verticals
   for (int i = 0; i < 3; i++)
     {
       if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != '-')
 	{
-	  cout << board[i][0] << " wins!" << endl;
-	  return true;
+	  if (board[i][0] == 'X')
+	    {
+	      cout << "X wins!";
+	      scorex +=1;
+	      return true;
+	    }
+	  else if (board[i][0] == 'O')
+	    {
+	      cout << "O wins!" << endl;
+	      scoreo += 1;
+	      return true;
+	    }
 	}
       else if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != '-')
 	{
-	  cout << board[0][i] << " wins!" << endl;
-	  return true;
+	  if (board[0][i] == 'X')
+            {
+              cout << "X wins!";
+              scorex +=1;
+              return true;
+            }
+          else if (board[0][i] == 'O')
+            {
+              cout << "O wins!" << endl;
+              scoreo += 1;
+              return true;
+            }
+
 	}
     }
   //check diagonals
@@ -43,8 +66,9 @@ bool checkwin(char (&board)[3][3])//win detection, iterates through rows and col
   //check tie
   return false;
 }
-int printboard(char (&board)[3][3], int &turn)
+int printboard(char (&board)[3][3], int &turn, int &scorex, int &scoreo)
   {
+    cout << "Score: X:" << scorex << " O:" << scoreo << endl;
     cout << endl;
     if (turn == 1)
       {
@@ -87,7 +111,7 @@ int placeplayer(char (&board)[3][3], int row, int col, int &turn)
   return 0;
 }
 
-int taketurn(char (&board)[3][3], int &turn, bool &winner, bool &playing)
+int taketurn(char (&board)[3][3], int &turn, bool &winner, bool &playing, int &scorex, int &scoreo)
 { 
   while (playing == true)
     {
@@ -100,8 +124,8 @@ int taketurn(char (&board)[3][3], int &turn, bool &winner, bool &playing)
         {
           placeplayer(board, row, col, turn);
 	  turn = turn * -1;//goes before printboard() so that the board is printed with the correct player's turn
-          printboard(board, turn);
-	  if (checkwin(board) == true)
+          printboard(board, turn, scorex, scoreo);
+	  if (checkwin(board, scorex, scoreo) == true)
 	    {
 	      winner = true;
 	      playing = false;
@@ -112,27 +136,52 @@ int taketurn(char (&board)[3][3], int &turn, bool &winner, bool &playing)
 	  cout << "That spot has been marked or is out of range, choose another spot" << endl;
 	}
     }
+  cout << "Would you like to play again?(y/n): " << endl;
+  char ans;
+  cin >> ans;
+  if (ans == 'y')
+    {
+      turn = 1;
+      winner = false;
+      playing = true;
+      //clears the board
+      for (int i = 0; i < 3; i++)
+	{
+	  for (int j = 0; j < 3; j++)
+	    {
+	      board[i][j] = '-';
+	    }
+	}
+      printboard(board, turn, scorex, scoreo);
+      taketurn(board, turn, winner, playing, scorex, scoreo);
+    }
+  else
+    {
+      return 0;
+    }
   return 0;
 }
 
 int main()
 {
+  int scorex = 0;
+  int scoreo = 0;
   int turn = 1;//holds player turn as 1 r -1 (multiplied by -1 to flip)
   bool winner = false;
   bool playing = true;
   char board[3][3] = {{'-','-','-'},{'-','-','-'},{'-','-','-'}};
 
   //function declarations
-  int printboard(char (&board)[3][3], int &turn);
-  //bool checkwin(char (&board)[3][3]);
+  int printboard(char (&board)[3][3], int &turn, int &scorex, int &scoreo);
+  bool checkwin(char (&board)[3][3], int &scorex, int &scoreo);
   bool isvalidmove(char (&board)[3][3], int row, int col);
   int placeplayer(char (&board)[3][3], int row, int col, int &turn);
-  int taketurn(char (&board)[3][3],int &turn, bool &winner, bool &playing);
+  int taketurn(char (&board)[3][3],int &turn, bool &winner, bool &playing, int &scorex, int &scoreo);
   
   //setting up the board
   turn = 1;
   winner = false;
   cout << " Welcome to Tic Tac Toe" << endl;
-  printboard(board, turn);
-  taketurn(board, turn, winner, playing);
+  printboard(board, turn, scorex, scoreo);
+  taketurn(board, turn, winner, playing, scorex, scoreo);
 }
