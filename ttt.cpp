@@ -24,13 +24,13 @@ bool checkwin(char (&board)[3][3], int &scorex, int &scoreo)//win detection, ite
 	{
 	  if (board[i][0] == 'X')
 	    {
-	      cout << "X wins!";
+	      cout << "X wins! ";
 	      scorex +=1;
 	      return true;
 	    }
 	  else if (board[i][0] == 'O')
 	    {
-	      cout << "O wins!" << endl;
+	      cout << "O wins! " << endl;
 	      scoreo += 1;
 	      return true;
 	    }
@@ -39,13 +39,13 @@ bool checkwin(char (&board)[3][3], int &scorex, int &scoreo)//win detection, ite
 	{
 	  if (board[0][i] == 'X')
             {
-              cout << "X wins!";
+              cout << "X wins! ";
               scorex +=1;
               return true;
             }
           else if (board[0][i] == 'O')
             {
-              cout << "O wins!" << endl;
+              cout << "O wins! " << endl;
               scoreo += 1;
               return true;
             }
@@ -57,13 +57,13 @@ bool checkwin(char (&board)[3][3], int &scorex, int &scoreo)//win detection, ite
     {
       if (board[0][0] == 'X')
             {
-              cout << "X wins!";
+              cout << "X wins! ";
               scorex +=1;
               return true;
             }
           else if (board[0][0] == 'O')
             {
-              cout << "O wins!" << endl;
+              cout << "O wins! " << endl;
               scoreo += 1;
               return true;
             }
@@ -72,21 +72,21 @@ bool checkwin(char (&board)[3][3], int &scorex, int &scoreo)//win detection, ite
     {
       if (board[0][2] == 'X')
             {
-              cout << "X wins!";
+              cout << "X wins! ";
               scorex +=1;
               return true;
             }
           else if (board[0][2] == 'O')
             {
-              cout << "O wins!" << endl;
+              cout << "O wins! " << endl;
               scoreo += 1;
               return true;
             }
     }
   //check tie (manually and inefficiently, but effective)
-  else if (board[0][0] == '-' && board[0][1] == '-' && board[0][2] == '-' &&
-	   board[1][0] == '-' && board[1][1] == '-' && board[1][2] == '-' &&
-	   board[2][0] == '-' && board[2][1] == '-' && board[2][2] == '-')
+  else if (board[0][0] != '-' && board[0][1] != '-' && board[0][2] != '-' &&
+	   board[1][0] != '-' && board[1][1] != '-' && board[1][2] != '-' &&
+	   board[2][0] != '-' && board[2][1] != '-' && board[2][2] != '-')
     {
       cout << "Tie!" << endl;//no score change (could be +0.5 like in chess, but I already have the scores as integers everywhere)
       return true;//technically not a true win, but triggers the next round.
