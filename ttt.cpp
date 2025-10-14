@@ -150,13 +150,17 @@ int taketurn(char (&board)[3][3], int &turn, bool &winner, bool &playing, int &s
       if (isvalidmove(board, row, col) == true)
         {
           placeplayer(board, row, col, turn);
-	  turn = turn * -1;//goes before printboard() so that the board is printed with the correct player's turn
-          printboard(board, turn, scorex, scoreo);
 	  if (checkwin(board, scorex, scoreo) == true)
 	    {
 	      winner = true;
 	      playing = false;
 	    }
+	  else if (checkwin(board, scorex, scoreo) == false)
+	    {
+	      turn = turn * -1;//goes before printboard() so that the board is printed with the correct player's turn
+	      printboard(board, turn, scorex, scoreo); 
+	    }
+	  
         }
       else
 	{
