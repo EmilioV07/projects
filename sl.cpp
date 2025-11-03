@@ -12,7 +12,6 @@ used for documentation and explaining c++ concepts & syntax
 */
 
 #include <iostream>
-#include <cstring>
 #include <vector>
 
 using namespace std;
@@ -25,7 +24,7 @@ struct stdt
     float gpa;
 };
 
-stdt* addstdt(vector<stdt>& students)
+stdt addstdt(vector<stdt>& students)
 {
   bool inputting = true;
   while (inputting)
@@ -48,21 +47,17 @@ stdt* addstdt(vector<stdt>& students)
       cout << endl;
       cout << "Is this information correct? (y/n): ";
       if(cin >> answer && answer == 'y'){inputting=false;}
-      stdt* s = new stdt;
-      s->firstname = firstname;
-      s->lastname = lastname;
-      s->id = id;
-      s->gpa = gpa;
+      stdt s;
     }
 //create a new student using information provided
 //add student to vector list
   //students.push_back({stdt.firstname, stdt.lastname, stdt.id, stdt.gpa});
   //cout << students;
-  s->firstname = firstname;
-  s->lastname = lastname;
-  s->id = id;
-  s->gpa = gpa;
-
+  s.firstname = firstname;
+  s.lastname = lastname;
+  s.id = id;
+  s.gpa = gpa;
+  students.push_back(s)
   return s;
 }
 
