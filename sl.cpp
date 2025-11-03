@@ -25,16 +25,11 @@ struct stdt
     float gpa;
 };
 
-int addstdt()
+stdt* addstdt(vector<stdt>& students)
 {
   bool inputting = true;
   while (inputting)
     {
-      char answer = '\0';
-      char firstname[81] = {'\0'};
-      char lastname[81] = {'\0'};
-      int id;
-      float gpa;
       cout << "Enter the student's first name: ";
       cin >> firstname;
       cout << endl;
@@ -53,18 +48,43 @@ int addstdt()
       cout << endl;
       cout << "Is this information correct? (y/n): ";
       if(cin >> answer && answer == 'y'){inputting=false;}
+      stdt* s = new stdt;
+      s->firstname = firstname;
+      s->lastname = lastname;
+      s->id = id;
+      s->gpa = gpa;
     }
 //create a new student using information provided
 //add student to vector list
-  people.pushback({firstname, lastname, id, gpa});
-  cout << people;
+  //students.push_back({stdt.firstname, stdt.lastname, stdt.id, stdt.gpa});
+  //cout << students;
+  s->firstname = firstname;
+  s->lastname = lastname;
+  s->id = id;
+  s->gpa = gpa;
+
+  return s;
+}
+
+int removestdt(vector<stdt>& students)
+{
   return 0;
 }
 
 int main()
 {
-  bool inputting = true;
-  while(inputting){addstdt();}
+  bool inputting2 = true;
+  char answer2[10] = '\0';
+  vector<stdt> students = {};
+  while(inputting2)
+    {
+      cout << "Enter operation (add, remove, quit): " << endl;
+      cin >> answer2;
+      if(answer2[1] == 'a'){addstdt(vector<stdt>& students);}
+      else if(answer2[1] == 'r'){removestdt();}
+      else if(answer2[1] == 'q'){inputting2 = false;}
+      else{cout << "Enter a valid operation" << endl;}
+    }
   return 0;
 }
 
