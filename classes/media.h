@@ -5,13 +5,11 @@ using namespace std;
 class media
 {
 	private:
-	char* title[81];
+	char* title[80];
 	int year;
 
 	public:
-	//constructor?
-	media();
-	//destructor
+	virtual ~media();
 	
 	//get methods
 	char* gtitle();
