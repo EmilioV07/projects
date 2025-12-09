@@ -15,33 +15,166 @@ provided sample code (beyond my comprehension) and lessons on constructors & des
 */
 #include<iostream>
 #include<cstring>
-#include"media.h"
 #include<vector>
+#include"media.h"
+#include"vg.h"
+#include"mv.h"
+#include"ms.h"
 using namespace  std;
-int add()
+int add(vector<media*>& medialist)//add vector passed by reference (original modification) to add media to
 {
-	
+	bool live = true;
+	while(live)
+	{
+		char type[80];//universal attribute declarations
+		char title[80];
+		int year;
+		cout<<"Media type (videogame, movie, music): ";//universal attributes gathering and assignment
+		cin>>type;
+		cout<<endl;
+		cout<<"Media title: ";
+		cin>>title;
+		cout<<endl;
+		cout<<"Media year: "
+		cin>>year;
+		cout<<endl;
+		//individual add operations for different media types
+		if(strcmp(type, "videogame")==0)//checks command
+		{
+			char publisher[80];//declarations of local media attributes
+			int rating;
+			cout<<"Publisher: ";//gathering and assigning of local media attributes
+			cin>>publisher;
+			cout<<endl;
+			cout<<"Rating: ";
+			cin>>rating;
+			cout<<endl;
+			media* newvg = new vg(title, year, publisher, rating);//creates object on the memory and assigns pointer
+			medialist.push_back(newvg);//adds object pointer to the media list/vector
+		}
+		else if(strcmp(type, "movie")==0)//done before movie files, will not work w/o them
+		{
+			char director[80];
+			int duration;
+			int rating;
+			cout<<"Director: ";
+			cin>>director;
+			cout<<endl;
+			cout<<"Duration (minutes): ";
+			cin>>director;
+			cout<<endl;
+			cout<<"Rating: ";
+			cin>>rating;
+			cout<<endl;
+			media* newmv = new mv(title, director, year, duration, rating);
+			medialist.push_back(newmv);
+		}
+		else if(strcmp(type, "music")==0)
+		{
+			char artist[80];
+			char publisher[80];
+			int duration;
+			cout<<"Artist: ";
+			cin>>artist;
+			cout<<endl;
+			cout<<"Publisher: ";
+			cin>>publisher;
+			cout<<endl;
+			cout<<"Duration (minutes): ";
+			cin>>duration;
+			cout<<endl;
+			media* newms = new mv(title, artist, year, duration, publisher);
+			medialist.push_back(newms);
+		}
+		else{cout<<"Invalid information, please try again"<<endl;}
+	}
+	return 0;
 }
-int search()
+int search(vector<media*>& medialist)
 {
-	
+	char type[80];
+	char title[80];
+	int year;
+	cout<<"Search by title or year?: ";
+	cin>>type;
+	cout<<endl;
+	if(strcmp(type, title)==0)
+	{
+		cout<<"Title: ";
+		cin>>title;
+		cout<<endl;
+		for(media* media : medialist)//iterator to look through medialist for media with given title
+		{
+			if(strcmp(title, media->gtitle())==0)//checks title match
+			{
+				cout<<"Title: "<<title<<" "<<"Year: "<<media->gyear()<<endl;
+			}
+		}
+	}
+	else if(strcmp(type, year)==0)
+	{
+		cout<<"Year: ";
+		cin>>year;
+		cout<<endl;
+		for(media* media : medialist)//iterator to look through medialist for media with given year
+		{
+			if(media->gyear()==year)//checks year match
+			{
+				cout<<"Year: "<<year<<" "<<"Title: "<<title;
+			}
+		}
+	}
+	return 0;//use for conditional if none are found (ex Sorry, no item matched your search)
 }
 int dl()
 {
-	
+	char type[80];
+	char title[80];
+	int year;
+	cout<<"Delete by title or year?: ";
+	cin>>type;
+	cout<<endl;
+	if(strcmp(type, title)==0)
+	{
+		cout<<"Title: ";
+		cin>>title;
+		cout<<endl;
+		for(media* media : medialist)//iterator to look through medialist for media with given title
+		{
+			if(strcmp(title, media->gtitle())==0)//checks title match
+			{
+				cout<<"Title: "<<title<<" "<<"Year: "<<media->gyear()<<endl;
+			}
+		}
+	}
+	else if(strcmp(type, year)==0)
+	{
+		cout<<"Year: ";
+		cin>>year;
+		cout<<endl;
+		for(media* media : medialist)//iterator to look through medialist for media with given year
+		{
+			if(media->gyear()==year)//checks year match
+			{
+				cout<<"Year: "<<year<<" "<<"Title: "<<title;
+			}
+		}
+	}
+	return 0;
 }
 int main()
 {
-	vector<media*> medialist;//vector of media pointers
+	vector<media*> medialist;//vector of media object pointers
 	while(inputting)
 	{
-		char op[10];
+		char op[12];
+		cout<<"Note: Use media title in SEARCH and DELETE operations."<<endl;
 		cout<<"Enter an operation (ADD, SEARCH, DELETE): ";
 		cin>>op;
 		cout<<endl;
-		if(strcmp(op, "ADD")==0){add();}
-		else if(strcmp(op, "SEARCH")==0){search();}
-		else if(strcmp(op, "DELETE")==0){dl();}
+		if(strcmp(op, "ADD")==0){add(medialist);}
+		else if(strcmp(op, "SEARCH")==0){search(medialist);}
+		else if(strcmp(op, "DELETE")==0){dl(medialist);}
 		else{cout<<"Input does not match any operation, try again."<<endl;}
 				
 	{
