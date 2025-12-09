@@ -1,25 +1,14 @@
 #include<iostream>
 #include<cstring>
-#include "media.h"
+#include"media.h"
 using namespace std;
-
-media::media()//constructor
+media::media(char* _title, int _year)//constructor
 {
-	title = new char[80];
-	year = 0;
+	title = new char[strlen(_title)+1];//allocates memory for title
+	strcpy(title, _title)//copies the input title into the new memory space
+	year = 0;//sets default year value
 }
-char media::gtitle()
-{
-	return title;
-}
-int media::gyear()
-{
-	return year;
-}
-/*
-media::~media()//destructor
-{
-	//delete title;
-	//delete year;?
-}
-*/
+//getter functions
+char media::gtitle(){return title;}
+int media::gyear(){return year;}
+media::~media(){delete[] title;}//destructor, frees up allocated memory
