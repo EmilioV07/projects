@@ -1,8 +1,9 @@
 #include<media.h>
+#include<iostream>
 class vg : public media
 {
 	private:
-	char publisher[80];
+	char* publisher;
 	int rating;
 
 	public:
