@@ -1,4 +1,4 @@
-#include<media.h>
+#include"media.h"
 #include<iostream>
 class ms : public media
 {
@@ -15,4 +15,6 @@ class ms : public media
 	int gyear();
 	char* gartist();
 	char* gtitle();
+	ms(char* _title, char* _artist, int _year, int _duration, char* _publisher);
+	virtual ~ms();
 };

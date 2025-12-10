@@ -4,14 +4,12 @@ using namespace std;
 class media
 {
 	private:
-	char* title[80];
+	char* title;
 	int year;
 
 	public:
-	virtual ~media();
-	
-	//get methods
 	char* gtitle();
 	int gyear();
-	//member function(s)
+	media(char* _title, int _year);
+	virtual ~media();
 };

@@ -1,4 +1,4 @@
-#include<media.h>
+#include"media.h"
 #include<iostream>
 class vg : public media
 {
@@ -7,6 +7,8 @@ class vg : public media
 	int rating;
 
 	public:
-	char gpublisher();
+	char* gpublisher();
 	int grating();
+	vg(char* _title, int _year, char* _publisher, int _rating);
+	virtual ~vg();
 };

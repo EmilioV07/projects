@@ -5,7 +5,7 @@ This program runs a digital media database where the user can ADD, DELETE, and S
 
 Considering child classes/files are so similar in structure, practically duplicates, most commenting will be found in
 media.h/.cpp and vg.h/.cpp
-
+g
 citations:
 
 1. Dylan Waters
@@ -35,7 +35,7 @@ int add(vector<media*>& medialist)//add vector passed by reference (original mod
 		cout<<"Media title: ";
 		cin>>title;
 		cout<<endl;
-		cout<<"Media year: "
+		cout<<"Media year: ";
 		cin>>year;
 		cout<<endl;
 		//individual add operations for different media types
@@ -83,7 +83,7 @@ int add(vector<media*>& medialist)//add vector passed by reference (original mod
 			cout<<"Duration (minutes): ";
 			cin>>duration;
 			cout<<endl;
-			media* newms = new mv(title, artist, year, duration, publisher);
+			media* newms = new ms(title, artist, year, duration, publisher);
 			medialist.push_back(newms);
 		}
 		else{cout<<"Invalid information, please try again"<<endl;}
@@ -111,7 +111,7 @@ int search(vector<media*>& medialist)
 			}
 		}
 	}
-	else if(strcmp(type, year)==0)
+	else if(strcmp(year, "year")==0)
 	{
 		cout<<"Year: ";
 		cin>>year;
@@ -176,7 +176,6 @@ int main()
 		else if(strcmp(op, "SEARCH")==0){search(medialist);}
 		else if(strcmp(op, "DELETE")==0){dl(medialist);}
 		else{cout<<"Input does not match any operation, try again."<<endl;}
-				
-	{
+	}
 	return 0;
 }
