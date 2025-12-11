@@ -159,7 +159,7 @@ int dl(vector<media*>& medialist)
 		{
 			if(media->gyear()==year)//checks year match
 			{
-				cout<<"Year: "<<year<<" "<<"Title: "<<title;
+				cout<<"Year: "<<year<<" "<<"Title: "<<media->gtitle()<<endl;
 			}
 		}
 	}
