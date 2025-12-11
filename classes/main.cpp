@@ -51,6 +51,7 @@ int add(vector<media*>& medialist)//add vector passed by reference (original mod
 			cout<<endl;
 			media* newvg = new vg(title, year, publisher, rating);//creates object on the memory and assigns pointer
 			medialist.push_back(newvg);//adds object pointer to the media list/vector
+			live=false;
 		}
 		else if(strcmp(type, "movie")==0)//done before movie files, will not work w/o them
 		{
@@ -66,8 +67,9 @@ int add(vector<media*>& medialist)//add vector passed by reference (original mod
 			cout<<"Rating: ";
 			cin>>rating;
 			cout<<endl;
-			media* newmv = new mv(title, director, year, duration, rating);
+			media* newmv = new mv(title, year, director, duration, rating);
 			medialist.push_back(newmv);
+			live=false;
 		}
 		else if(strcmp(type, "music")==0)
 		{
@@ -85,6 +87,7 @@ int add(vector<media*>& medialist)//add vector passed by reference (original mod
 			cout<<endl;
 			media* newms = new ms(title, artist, year, duration, publisher);
 			medialist.push_back(newms);
+			live=false;
 		}
 		else{cout<<"Invalid information, please try again"<<endl;}
 	}
@@ -98,7 +101,7 @@ int search(vector<media*>& medialist)
 	cout<<"Search by title or year?: ";
 	cin>>type;
 	cout<<endl;
-	if(strcmp(type, title)==0)
+	if(strcmp(type, "title")==0)
 	{
 		cout<<"Title: ";
 		cin>>title;
@@ -111,7 +114,7 @@ int search(vector<media*>& medialist)
 			}
 		}
 	}
-	else if(strcmp(year, "year")==0)
+	else if(strcmp(type, "year")==0)
 	{
 		cout<<"Year: ";
 		cin>>year;
@@ -126,7 +129,7 @@ int search(vector<media*>& medialist)
 	}
 	return 0;//use for conditional if none are found (ex Sorry, no item matched your search)
 }
-int dl()
+int dl(vector<media*>& medialist)
 {
 	char type[80];
 	char title[80];
@@ -147,7 +150,7 @@ int dl()
 			}
 		}
 	}
-	else if(strcmp(type, year)==0)
+	else if(strcmp(type, "year")==0)
 	{
 		cout<<"Year: ";
 		cin>>year;
@@ -165,17 +168,20 @@ int dl()
 int main()
 {
 	vector<media*> medialist;//vector of media object pointers
+	bool inputting=true;
 	while(inputting)
 	{
 		char op[12];
 		cout<<"Note: Use media title in SEARCH and DELETE operations."<<endl;
-		cout<<"Enter an operation (ADD, SEARCH, DELETE): ";
+		cout<<"Enter an operation (ADD, SEARCH, DELETE, QUIT): ";
 		cin>>op;
 		cout<<endl;
 		if(strcmp(op, "ADD")==0){add(medialist);}
 		else if(strcmp(op, "SEARCH")==0){search(medialist);}
 		else if(strcmp(op, "DELETE")==0){dl(medialist);}
+		else if(strcmp(op, "QUIT")==0){inputting=false;}
 		else{cout<<"Input does not match any operation, try again."<<endl;}
 	}
 	return 0;
 }
+

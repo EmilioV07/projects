@@ -1,3 +1,5 @@
+#ifndef VG
+#define VG
 #include"media.h"
 #include<iostream>
 class vg : public media
@@ -12,3 +14,4 @@ class vg : public media
 	vg(char* _title, int _year, char* _publisher, int _rating);
 	virtual ~vg();
 };
+#endif

@@ -1,3 +1,5 @@
+#ifndef MV
+#define MV
 #include"media.h"
 #include<iostream>
 class mv : public media
@@ -11,6 +13,7 @@ class mv : public media
 	char* gdirector();
 	int grating();
 	int gduration();
-	mv(char* _title, int _year, char* director, int _rating);
+	mv(char* _title, int _year, char* director, int _duration, int _rating);
 	virtual ~mv();
 };
+#endif

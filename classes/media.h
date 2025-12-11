@@ -1,3 +1,5 @@
+#ifndef MEDIA
+#define MEDIA
 #include<iostream>
 #include<cstring>
 using namespace std;
@@ -13,3 +15,4 @@ class media
 	media(char* _title, int _year);
 	virtual ~media();
 };
+#endif

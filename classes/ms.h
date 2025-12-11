@@ -1,3 +1,5 @@
+#ifndef MS
+#define MS
 #include"media.h"
 #include<iostream>
 class ms : public media
@@ -18,3 +20,4 @@ class ms : public media
 	ms(char* _title, char* _artist, int _year, int _duration, char* _publisher);
 	virtual ~ms();
 };
+#endif

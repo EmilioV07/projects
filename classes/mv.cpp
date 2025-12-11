@@ -3,7 +3,7 @@
 #include"media.h"
 #include"mv.h"
 
-mv::mv(char* _title, char* _director, int _year, int _duration, int _rating) : media(_title, _year)//initializer list to let videogame inherit title & year
+mv::mv(char* _title, int _year, char* _director, int _duration, int _rating) : media(_title, _year)//initializer list to let videogame inherit title & year
 {
 	director = new char[strlen(_director)+1];
 	strcpy(director, _director);
