@@ -17,6 +17,7 @@ provided sample code (beyond my comprehension) and lessons on constructors & des
 #include<cstring>
 #include<vector>
 #include<algorithm>
+#include<limits>
 #include"media.h"
 #include"vg.h"
 #include"mv.h"
@@ -31,13 +32,14 @@ int add(vector<media*>& medialist)//add vector passed by reference (original mod
 		char title[80];
 		int year;
 		cout<<"Media type (videogame, movie, music): ";//universal attributes gathering and assignment
-		cin>>type;
+		cin.getline(type, 80);
 		cout<<endl;
 		cout<<"Media title: ";
-		cin>>title;
+		cin.getline(title, 80);
 		cout<<endl;
 		cout<<"Media year: ";
 		cin>>year;
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');//copilot debug for removing newline from buffer after numeric input
 		cout<<endl;
 		//individual add operations for different media types
 		if(strcmp(type, "videogame")==0)//checks command
@@ -45,14 +47,15 @@ int add(vector<media*>& medialist)//add vector passed by reference (original mod
 			char publisher[80];//declarations of local media attributes
 			int rating;
 			cout<<"Publisher: ";//gathering and assigning of local media attributes
-			cin>>publisher;
+			cin.getline(publisher, 80);
 			cout<<endl;
 			cout<<"Rating: ";
 			cin>>rating;
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			cout<<endl;
 			media* newvg = new vg(title, year, publisher, rating);//creates object on the memory and assigns pointer
 			medialist.push_back(newvg);//adds object pointer to the media list/vector
-			live=false;
+			live=false;//terminates loop
 		}
 		else if(strcmp(type, "movie")==0)//done before movie files, will not work w/o them
 		{
@@ -60,13 +63,15 @@ int add(vector<media*>& medialist)//add vector passed by reference (original mod
 			int duration;
 			int rating;
 			cout<<"Director: ";
-			cin>>director;
+			cin.getline(director, 80);
 			cout<<endl;
 			cout<<"Duration (minutes): ";
-			cin>>director;
+			cin>>duration;
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			cout<<endl;
 			cout<<"Rating: ";
 			cin>>rating;
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			cout<<endl;
 			media* newmv = new mv(title, year, director, duration, rating);
 			medialist.push_back(newmv);
@@ -78,13 +83,14 @@ int add(vector<media*>& medialist)//add vector passed by reference (original mod
 			char publisher[80];
 			int duration;
 			cout<<"Artist: ";
-			cin>>artist;
+			cin.getline(artist, 80);
 			cout<<endl;
 			cout<<"Publisher: ";
-			cin>>publisher;
+			cin.getline(publisher,80);
 			cout<<endl;
 			cout<<"Duration (minutes): ";
 			cin>>duration;
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			cout<<endl;
 			media* newms = new ms(title, artist, year, duration, publisher);
 			medialist.push_back(newms);
@@ -94,9 +100,9 @@ int add(vector<media*>& medialist)//add vector passed by reference (original mod
 	}
 	return 0;
 }
-int search(vector<media*>& medialist)
+int search(vector<media*>& medialist)//search function
 {
-	char type[80];
+	char type[80];//search type (title/year)
 	char title[80];
 	int year;
 	cout<<"Search by title or year?: ";
@@ -136,7 +142,7 @@ int dl(vector<media*>& medialist)
 	char type[80];
 	char title[80];
 	int year;
-	int count=0;
+	int count=0;//stores index to save to delete list
 	char ans;
 	cout<<"Delete by title or year?: ";
 	cin>>type;
@@ -152,9 +158,9 @@ int dl(vector<media*>& medialist)
 			if(strcmp(title, media->gtitle())==0)//checks title match
 			{
 				cout<<"Title: "<<title<<" "<<"Year: "<<media->gyear()<<endl;
-				dls.push_back(count);
+				dls.push_back(count);//adds found index to delete list
 			}
-			count++;
+			count++;//increases count for next iteration
 		}
 	}
 	else if(strcmp(type, "year")==0)
@@ -180,8 +186,8 @@ int dl(vector<media*>& medialist)
 		sort(dls.rbegin(), dls.rend());//copilot sorting and deleting by index method with stored indices-to-delete
 		for(int i : dls)
 		{
-			delete medialist[i];
-			medialist.erase(medialist.begin() + i);
+			delete medialist[i];//clears memory item
+			medialist.erase(medialist.begin() + i);//clears vector position (sorted in opposite order to avound shifts)
 		}
 	}//delete items
 	return 0;//if no, does not delete items
@@ -190,12 +196,12 @@ int main()
 {
 	vector<media*> medialist;//vector of media object pointers
 	bool inputting=true;
-	while(inputting)
+	while(inputting)//input loop
 	{
-		char op[12];
+		char op[80];
 		cout<<"Note: Use media title in SEARCH and DELETE operations."<<endl;
 		cout<<"Enter an operation (ADD, SEARCH, DELETE, QUIT): ";
-		cin>>op;
+		cin.getline(op, 80);
 		cout<<endl;
 		if(strcmp(op, "ADD")==0){add(medialist);}
 		else if(strcmp(op, "SEARCH")==0){search(medialist);}
@@ -203,6 +209,10 @@ int main()
 		else if(strcmp(op, "QUIT")==0){inputting=false;}
 		else{cout<<"Input does not match any operation, try again."<<endl;}
 	}
+	for(media* i : medialist)
+	{
+		delete i;
+	}
+	medialist.clear();
 	return 0;
 }
-
