@@ -16,6 +16,7 @@ provided sample code (beyond my comprehension) and lessons on constructors & des
 #include<iostream>
 #include<cstring>
 #include<vector>
+#include<algorithm>
 #include"media.h"
 #include"vg.h"
 #include"mv.h"
@@ -131,23 +132,29 @@ int search(vector<media*>& medialist)
 }
 int dl(vector<media*>& medialist)
 {
+	vector<int> dls;//vector holding medialist indices to delete
 	char type[80];
 	char title[80];
 	int year;
+	int count=0;
+	char ans;
 	cout<<"Delete by title or year?: ";
 	cin>>type;
 	cout<<endl;
-	if(strcmp(type, title)==0)
+	if(strcmp(type, "title")==0)
 	{
 		cout<<"Title: ";
 		cin>>title;
 		cout<<endl;
 		for(media* media : medialist)//iterator to look through medialist for media with given title
 		{
+			
 			if(strcmp(title, media->gtitle())==0)//checks title match
 			{
 				cout<<"Title: "<<title<<" "<<"Year: "<<media->gyear()<<endl;
+				dls.push_back(count);
 			}
+			count++;
 		}
 	}
 	else if(strcmp(type, "year")==0)
@@ -160,10 +167,24 @@ int dl(vector<media*>& medialist)
 			if(media->gyear()==year)//checks year match
 			{
 				cout<<"Year: "<<year<<" "<<"Title: "<<media->gtitle()<<endl;
+				dls.push_back(count);
 			}
+			count++;
 		}
 	}
-	return 0;
+	cout<<"Delete item(s)(y/n)?: ";
+	cin>>ans;
+	cout<<endl;
+	if(ans=='y')
+	{
+		sort(dls.rbegin(), dls.rend());//copilot sorting and deleting by index method with stored indices-to-delete
+		for(int i : dls)
+		{
+			delete medialist[i];
+			medialist.erase(medialist.begin() + i);
+		}
+	}//delete items
+	return 0;//if no, does not delete items
 }
 int main()
 {
