@@ -18,6 +18,7 @@ provided sample code (beyond my comprehension) and lessons on constructors & des
 #include<vector>
 #include<algorithm>
 #include<limits>
+#include<typeinfo>
 #include"media.h"
 #include"vg.h"
 #include"mv.h"
@@ -106,18 +107,21 @@ int search(vector<media*>& medialist)//search function
 	char title[80];
 	int year;
 	cout<<"Search by title or year?: ";
-	cin>>type;
+	cin.getline(type, 80);
 	cout<<endl;
 	if(strcmp(type, "title")==0)
 	{
 		cout<<"Title: ";
-		cin>>title;
+		cin.getline(title, 80);
 		cout<<endl;
 		for(media* media : medialist)//iterator to look through medialist for media with given title
 		{
 			if(strcmp(title, media->gtitle())==0)//checks title match
 			{
-				cout<<"Title: "<<title<<" "<<"Year: "<<media->gyear()<<endl;
+				//uses dynamic cast to check media type and print details accordingly
+				if(auto vg = dynamic_cast<vg*>(media)){cout<<"Title: "<<vg->gtitle()<<" Year: "<<vg->gyear()<<" Publisher: "<<vg->gpublisher()<<" Rating: "<<vg->grating();}
+				else if(auto ms = dynamic_cast<ms*>(media)){cout<<"Title: "<<ms->gtitle()<<" Artist: "<<ms->gartist()<<" Year: "<<ms->gyear()<<" Duration: "<<ms->gduration()<<" Publisher: "<<vg->gpublisher();}
+				else if(auto mv = dynamic_cast<mv*>(media)){cout<<"Title: "<<mv->gtitle()<<" Year: "<<mv->gyear()<<" Director: "<<mv->gdirector()<<" Duration: "<<mv->gduration()<<" Rating: "<<mv->grating();}
 			}
 		}
 	}
@@ -125,12 +129,14 @@ int search(vector<media*>& medialist)//search function
 	{
 		cout<<"Year: ";
 		cin>>year;
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout<<endl;
 		for(media* media : medialist)//iterator to look through medialist for media with given year
 		{
 			if(media->gyear()==year)//checks year match
 			{
-				cout<<"Year: "<<year<<" "<<"Title: "<<media->gtitle()<<endl;;
+				cout<<"Year: "<<year<<" "<<"Title: "<<media->gtitle()<<" | ";
+				if(media){}
 			}
 		}
 	}
@@ -142,15 +148,15 @@ int dl(vector<media*>& medialist)
 	char type[80];
 	char title[80];
 	int year;
-	int count=0;//stores index to save to delete list
+	int count=0;//stores index to save to delete list (resets every delete call)
 	char ans;
 	cout<<"Delete by title or year?: ";
-	cin>>type;
+	cin.getline(type, 80);
 	cout<<endl;
 	if(strcmp(type, "title")==0)
 	{
 		cout<<"Title: ";
-		cin>>title;
+		cin.getline(title, 80);
 		cout<<endl;
 		for(media* media : medialist)//iterator to look through medialist for media with given title
 		{
@@ -167,6 +173,7 @@ int dl(vector<media*>& medialist)
 	{
 		cout<<"Year: ";
 		cin>>year;
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout<<endl;
 		for(media* media : medialist)//iterator to look through medialist for media with given year
 		{
@@ -180,6 +187,7 @@ int dl(vector<media*>& medialist)
 	}
 	cout<<"Delete item(s)(y/n)?: ";
 	cin>>ans;
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	cout<<endl;
 	if(ans=='y')
 	{
