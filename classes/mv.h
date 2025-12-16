@@ -1,5 +1,5 @@
-#ifndef MV
-#define MV
+#ifndef MV_H
+#define MV_H
 #include"media.h"
 #include<iostream>
 class mv : public media

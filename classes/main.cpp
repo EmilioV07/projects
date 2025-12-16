@@ -119,9 +119,9 @@ int search(vector<media*>& medialist)//search function
 			if(strcmp(title, media->gtitle())==0)//checks title match
 			{
 				//uses dynamic cast to check media type and print details accordingly
-				if(auto vg = dynamic_cast<vg*>(media)){cout<<"Title: "<<vg->gtitle()<<" Year: "<<vg->gyear()<<" Publisher: "<<vg->gpublisher()<<" Rating: "<<vg->grating();}
-				else if(auto ms = dynamic_cast<ms*>(media)){cout<<"Title: "<<ms->gtitle()<<" Artist: "<<ms->gartist()<<" Year: "<<ms->gyear()<<" Duration: "<<ms->gduration()<<" Publisher: "<<vg->gpublisher();}
-				else if(auto mv = dynamic_cast<mv*>(media)){cout<<"Title: "<<mv->gtitle()<<" Year: "<<mv->gyear()<<" Director: "<<mv->gdirector()<<" Duration: "<<mv->gduration()<<" Rating: "<<mv->grating();}
+				if(auto vgo = dynamic_cast<vg*>(media)){cout<<" Title: "<<vgo->gtitle()<<" Year: "<<vgo->gyear()<<" Publisher: "<<vgo->gpublisher()<<" Rating: "<<vgo->grating()<<endl;}
+				else if(auto mso = dynamic_cast<ms*>(media)){cout<<" Title: "<<mso->gtitle()<<" Artist: "<<mso->gartist()<<" Year: "<<mso->gyear()<<" Duration: "<<mso->gduration()<<" Publisher: "<<mso->gpublisher()<<endl;}
+				else if(auto mvo = dynamic_cast<mv*>(media)){cout<<" Title: "<<mvo->gtitle()<<" Year: "<<mvo->gyear()<<" Director: "<<mvo->gdirector()<<" Duration: "<<mvo->gduration()<<" Rating: "<<mvo->grating()<<endl;}
 			}
 		}
 	}
@@ -135,8 +135,10 @@ int search(vector<media*>& medialist)//search function
 		{
 			if(media->gyear()==year)//checks year match
 			{
-				cout<<"Year: "<<year<<" "<<"Title: "<<media->gtitle()<<" | ";
-				if(media){}
+				//uses dynamic cast to check media type and print details accordingly
+				if(auto vgo = dynamic_cast<vg*>(media)){cout<<" Title: "<<vgo->gtitle()<<" Year: "<<vgo->gyear()<<" Publisher: "<<vgo->gpublisher()<<" Rating: "<<vgo->grating()<<endl;}
+				else if(auto mso = dynamic_cast<ms*>(media)){cout<<" Title: "<<mso->gtitle()<<" Artist: "<<mso->gartist()<<" Year: "<<mso->gyear()<<" Duration: "<<mso->gduration()<<" Publisher: "<<mso->gpublisher()<<endl;}
+				else if(auto mvo = dynamic_cast<mv*>(media)){cout<<" Title: "<<mvo->gtitle()<<" Year: "<<mvo->gyear()<<" Director: "<<mvo->gdirector()<<" Duration: "<<mvo->gduration()<<" Rating: "<<mvo->grating()<<endl;}
 			}
 		}
 	}
@@ -163,7 +165,10 @@ int dl(vector<media*>& medialist)
 			
 			if(strcmp(title, media->gtitle())==0)//checks title match
 			{
-				cout<<"Title: "<<title<<" "<<"Year: "<<media->gyear()<<endl;
+				//uses dynamic cast to check media type and print details accordingly
+				if(auto vgo = dynamic_cast<vg*>(media)){cout<<" Title: "<<vgo->gtitle()<<" Year: "<<vgo->gyear()<<" Publisher: "<<vgo->gpublisher()<<" Rating: "<<vgo->grating()<<endl;}
+				else if(auto mso = dynamic_cast<ms*>(media)){cout<<" Title: "<<mso->gtitle()<<" Artist: "<<mso->gartist()<<" Year: "<<mso->gyear()<<" Duration: "<<mso->gduration()<<" Publisher: "<<mso->gpublisher()<<endl;}
+				else if(auto mvo = dynamic_cast<mv*>(media)){cout<<" Title: "<<mvo->gtitle()<<" Year: "<<mvo->gyear()<<" Director: "<<mvo->gdirector()<<" Duration: "<<mvo->gduration()<<" Rating: "<<mvo->grating()<<endl;}
 				dls.push_back(count);//adds found index to delete list
 			}
 			count++;//increases count for next iteration
@@ -179,7 +184,10 @@ int dl(vector<media*>& medialist)
 		{
 			if(media->gyear()==year)//checks year match
 			{
-				cout<<"Year: "<<year<<" "<<"Title: "<<media->gtitle()<<endl;
+				//uses dynamic cast to check media type and print details accordingly
+				if(auto vgo = dynamic_cast<vg*>(media)){cout<<" Title: "<<vgo->gtitle()<<" Year: "<<vgo->gyear()<<" Publisher: "<<vgo->gpublisher()<<" Rating: "<<vgo->grating()<<endl;}
+				else if(auto mso = dynamic_cast<ms*>(media)){cout<<" Title: "<<mso->gtitle()<<" Artist: "<<mso->gartist()<<" Year: "<<mso->gyear()<<" Duration: "<<mso->gduration()<<" Publisher: "<<mso->gpublisher()<<endl;}
+				else if(auto mvo = dynamic_cast<mv*>(media)){cout<<" Title: "<<mvo->gtitle()<<" Year: "<<mvo->gyear()<<" Director: "<<mvo->gdirector()<<" Duration: "<<mvo->gduration()<<" Rating: "<<mvo->grating()<<endl;}
 				dls.push_back(count);
 			}
 			count++;

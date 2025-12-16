@@ -1,5 +1,5 @@
-#ifndef MS
-#define MS
+#ifndef MS_H
+#define MS_H
 #include"media.h"
 #include<iostream>
 class ms : public media
@@ -14,9 +14,9 @@ class ms : public media
 	public:
 	char* gpublisher();
 	int gduration();
-	int gyear();
+	//int gyear();
 	char* gartist();
-	char* gtitle();
+	//char* gtitle();
 	ms(char* _title, char* _artist, int _year, int _duration, char* _publisher);
 	virtual ~ms();
 };

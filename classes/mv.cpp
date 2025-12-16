@@ -12,5 +12,6 @@ mv::mv(char* _title, int _year, char* _director, int _duration, int _rating) : m
 }
 
 char* mv::gdirector(){return director;}
+int mv::gduration(){return duration;}
 int mv::grating(){return rating;}
 mv::~mv(){delete[] director;}

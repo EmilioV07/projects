@@ -1,5 +1,5 @@
-#ifndef VG
-#define VG
+#ifndef VG_H
+#define VG_H
 #include"media.h"
 #include<iostream>
 class vg : public media
