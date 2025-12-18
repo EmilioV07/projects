@@ -1,11 +1,3 @@
 *
-!/projects/
 !.gitignore
-*.exe
-*.~
-*.o
-*.out
-
-!/projects/**/*.cpp
-!/projects/**/*.h
-!/projects/ll/
+!/projects/
