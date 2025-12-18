@@ -8,3 +8,4 @@
 
 !/projects/**/*.cpp
 !/projects/**/*.h
+!/projects/ll/
