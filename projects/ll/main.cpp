@@ -8,32 +8,15 @@ void add(int newvalue);
 void print(node* next);
 int main()
 {
-  
-}
-void add(int newvalue)
-{
-  node* current = head;
-  if(current == NULL)
-    {
-      head = new node();
-      head->setValu(newvalue);
-    }
-  else
-    {
-      while(current->getNext() != NULL)
-        {
-          current = current->getNext();
-        }
-      current->setNext(new node());
-      current->getNext()->setValue(newvalue);
-    }
-}
-void print(node* next)
-{
-	if(next==head)
-	{
-		cout << "list";
-	}
+	//object creation
+	student* 1 = new student(30, "rick");
+	student* 2 = new student(31, "frank");
+	student* 3 = new student(32, "duke");
+	//node creation
+	node* node1 = new node(1);
+	node* node2 = new node(2);
+	node* node3 = new node(3);
+
 	if(next!=Null)
 	{
 		cout<<next->getValue()<<" ";

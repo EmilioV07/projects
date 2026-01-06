@@ -4,6 +4,7 @@
 using namespace std;
 node::node()
 {
-
+	delete &value;
+	next = NULL;
 }
 node::~node(){delete //item;}
