@@ -25,15 +25,74 @@ def cmp(h1, h2):
 ans = cmp(hex1,hex2)
 print(ans.hex())
 """
-#
-with open ("hex2.txt",r) as file:
+#WORKING
+"""
+with open ("hex2.txt","r") as file:
 	hex = file.read().strip()
 bin = bytes.fromhex(hex) #converts to raw bytes
 #note, xor-ing against the same character un-xors
 def unxor(b):
-	rslt = []
+	rslt = [] #works as buffer for holding variables to manipulate
+	rsltcmp = [] #stores final product for later comparison
+	score = 0 #holds score
+	cmnchars = "etaoin shrdlu" #common chars provided on challenge page
 	for i in range(32, 127): #iterates through all printable ASCII characters (chr(i))
 		key = chr(i).encode() * len(b) #converts ASCII character to bytes for later XOR
-		piece = bytes(a ^ b for a, b in zip(b, key)) #XORs bytes of original hex with character
-		rslt.append(piece)
+		msg = bytes(a ^ b for a, b in zip(b, key)) #XORs bytes of original hex with character
+		dmsg = msg.decode(errors="ignore").lower() #converts the message to a lowercase string for comparison
+		rslt.append((chr(i), dmsg)) #prints xor character and output against encoded string bytes
+		for j in rslt[0][1]: #scores every xor option for english detection
+			if j in cmnchars:
+				score += 2
+			if j.isalpha():
+				score += 1
+			if j == " ":
+				score += 3
+			if j in ")(*&^%$#@~+_{}[]\|<>`":
+				score -=2
+		rslt.append(score) #stores score in print buffer
+		rsltcmp.append((chr(i),dmsg,score))
+		score = 0
+		print(rslt)
+		rslt.clear()
+	print("Answer: " + str(max(rsltcmp, key=lambda x: x[2]))) #copilot lambda solution for max grabbing incorrect tuple element to compare score
 unxor(bin)
+"""
+#WORKING
+with open ("hex3.txt","r") as file:
+	hex = file.read().strip()
+bin = bytes.fromhex(hex) #converts to raw bytes
+#note, xor-ing against the same character un-xors
+#print(bin)
+
+def findit(b):
+	for line in hex:
+		bin = bytes.fromhex(line) #individually converts line to raw bytes
+		
+
+def unxor(b): #brute forces single printable character xors for ONE LINE
+	rslt = [] #works as buffer for holding variables to manipulate
+	rsltcmp = [] #stores final product for later comparison
+	score = 0 #holds score
+	cmnchars = "etaoin shrdlu" #common chars provided on challenge page
+	for i in range(32, 127): #iterates through all printable ASCII characters (chr(i))
+		key = chr(i).encode() * len(b) #converts ASCII character to bytes for later XOR
+		msg = bytes(a ^ b for a, b in zip(b, key)) #XORs bytes of original hex with character
+		dmsg = msg.decode(errors="ignore").lower() #converts the message to a lowercase string for comparison
+		rslt.append((chr(i), dmsg)) #prints xor character and output against encoded string bytes
+		for j in rslt[0][1]: #scores every xor option for english detection
+			if j in cmnchars:
+				score += 2
+			if j.isalpha():
+				score += 1
+			if j == " ":
+				score += 3
+			if j in ")(*&^%$#@~+_{}[]\|<>`":
+				score -=2
+		rslt.append(score) #stores score in print buffer
+		rsltcmp.append((chr(i),dmsg,score))
+		score = 0
+		print(rslt)
+		rslt.clear()
+	print("Answer: " + str(max(rsltcmp, key=lambda x: x[2]))) #copilot lambda solution for max grabbing incorrect tuple element to compare score
+
