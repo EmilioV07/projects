@@ -4,7 +4,8 @@
 using namespace std;
 student::student(char* name)
 {
-	strcpy(name, fullname);
+	strcpy(fullname, name);
 }
-student::student(){delete name*;}
+void student::print(){cout<<fullname<<endl;}
+student::~student(){}
 

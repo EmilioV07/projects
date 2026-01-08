@@ -6,9 +6,10 @@ using namespace std;
 class student
 {
  private:
-	char* name[];
+	char fullname[80];
  public:
- 	student(char* name[80])
+ 	student(char* name);
  	void print();
 	~student();
 };
+#endif
