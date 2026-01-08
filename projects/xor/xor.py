@@ -59,26 +59,30 @@ def unxor(b):
 unxor(bin)
 """
 #WORKING
+"""
 with open ("hex3.txt","r") as file:
-	hex = file.read().strip()
-bin = bytes.fromhex(hex) #converts to raw bytes
+	hexlines = file.read().strip().split()
+#bin = bytes.fromhex(hex) #converts to raw bytes
 #note, xor-ing against the same character un-xors
 #print(bin)
 
-def findit(b):
-	for line in hex:
-		bin = bytes.fromhex(line) #individually converts line to raw bytes
-		
+def findit(h):
+	anslist = []
+	for line in hexlines:
+		binline = bytes.fromhex(line) #individually converts line to raw bytes
+		unxor(binline, anslist)
+		print(anslist)
+	print("Answer: " + str(max(anslist, key=lambda x: x[2])))
 
-def unxor(b): #brute forces single printable character xors for ONE LINE
+def unxor(b,a): #brute forces single printable character xors for ONE LINE
 	rslt = [] #works as buffer for holding variables to manipulate
 	rsltcmp = [] #stores final product for later comparison
 	score = 0 #holds score
-	cmnchars = "etaoin shrdlu" #common chars provided on challenge page
+	cmnchars = "etaoin shrdlu ETAOIN SHRDLU" #common chars provided on challenge page
 	for i in range(32, 127): #iterates through all printable ASCII characters (chr(i))
 		key = chr(i).encode() * len(b) #converts ASCII character to bytes for later XOR
 		msg = bytes(a ^ b for a, b in zip(b, key)) #XORs bytes of original hex with character
-		dmsg = msg.decode(errors="ignore").lower() #converts the message to a lowercase string for comparison
+		dmsg = msg.decode(errors="ignore") #converts the message to a lowercase string for comparison
 		rslt.append((chr(i), dmsg)) #prints xor character and output against encoded string bytes
 		for j in rslt[0][1]: #scores every xor option for english detection
 			if j in cmnchars:
@@ -92,7 +96,22 @@ def unxor(b): #brute forces single printable character xors for ONE LINE
 		rslt.append(score) #stores score in print buffer
 		rsltcmp.append((chr(i),dmsg,score))
 		score = 0
-		print(rslt)
+		#print(rslt)
 		rslt.clear()
 	print("Answer: " + str(max(rsltcmp, key=lambda x: x[2]))) #copilot lambda solution for max grabbing incorrect tuple element to compare score
+	a.append(max(rsltcmp, key=lambda x: x[2]))
 
+findit(hexlines)
+"""
+#
+import itertools
+keycycle = itertools.cycle(["I","C","E"])
+result = []
+with open ("hex4.txt","r") as file:
+	lines = file.read().strip().split("\n")
+def unxor(l,r):
+	for line in lines:
+		for char in line: #cycles through line once
+			result.append(char.encode() ^ next(keycycle).encode()) #XORs the one character of the line by current character of key
+	print(result)
+unxor(lines,result)
