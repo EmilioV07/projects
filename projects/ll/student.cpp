@@ -2,8 +2,9 @@
 #include<cstring>
 #include"student.h"
 using namespace std;
-student::student()
+student::student(char* name)
 {
-
+	strcpy(name, fullname);
 }
-student::student(){delete //item;}
+student::student(){delete name*;}
+

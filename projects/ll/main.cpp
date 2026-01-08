@@ -9,9 +9,9 @@ void print(node* next);
 int main()
 {
 	//object creation
-	student* 1 = new student(30, "rick");
-	student* 2 = new student(31, "frank");
-	student* 3 = new student(32, "duke");
+	student* 1 = new student("rick");
+	student* 2 = new student("frank");
+	student* 3 = new student("duke");
 	//node creation
 	node* node1 = new node(1);
 	node* node2 = new node(2);
@@ -26,4 +26,5 @@ int main()
 	{
 		//do nothing
 	}
+	return 0;
 }

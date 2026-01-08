@@ -7,13 +7,14 @@ using namespace std;
 class node
 {
  private:
-  
+  student* student;
+  node* next;
  public:
  void setvalue(newvalue);//sets node value to student
  student* getvalue();//gets the corresponding student for the current node
- void setnext(node* newnext);
+ void setnext(node* nnext);//sets pointer to next in chain
  node* getnext();//gets the next node in the chain
   node();//constructs node
-  ~node();
+  ~node();//destructor
 };
 #endif

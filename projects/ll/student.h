@@ -6,8 +6,9 @@ using namespace std;
 class student
 {
  private:
-	node* next;
-	student* student;s
+	char* name[];
  public:
-	virtual ~student();
+ 	student(char* name[80])
+ 	void print();
+	~student();
 };
