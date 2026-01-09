@@ -103,15 +103,21 @@ def unxor(b,a): #brute forces single printable character xors for ONE LINE
 
 findit(hexlines)
 """
-#
+#WORKING
 import itertools
-keycycle = itertools.cycle(["I","C","E"])
-result = []
 with open ("hex4.txt","r") as file:
-	lines = file.read().strip().split("\n")
-def unxor(l,r):
+	lines = file.read().strip()
+	print(lines)
+def unxor(lines):
+	result = []
+	keycycle = itertools.cycle(b"ICE") #sets cycle for each line individually
 	for line in lines:
-		for char in line: #cycles through line once
-			result.append(char.encode() ^ next(keycycle).encode()) #XORs the one character of the line by current character of key
-	print(result)
-unxor(lines,result)
+		xdline = []
+		byteline = line.encode()
+		for char in byteline: #cycles through line once
+			xdline.append(char ^ next(keycycle)) #XORs the one character of the line by current character of key
+		hexline = bytes(xdline).hex()
+		#print(hexline)
+		result.append(hexline) #adds line to list as a seperate list element
+	print(''.join(result))
+unxor(lines)
