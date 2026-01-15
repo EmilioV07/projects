@@ -128,26 +128,40 @@ import base64
 with open ("hex5.txt","r") as file:
 	lines64 = file.read().strip()
 	bytelines = base64.b64decode(lines64)
-print(bytelines) #raw bytes, WORK WITH THIS
+#print(bytelines) #raw bytes, WORK WITH THIS
 maxkeysize = 40
 #s1 = "this is a test"
 #s2 ="wokka wokka!!!"
 
-def brk():
-	keysize = 4
-	chunklist = []
-	pieceslist = [[] for _ in range(keysize)]
+def brk(bytelines, keysize): #breaks into keysize sizes chunks AND transposes (1,1,1) (2,2,2), etc...
+	chunklist = [] #CHUNKLIST: List of broken segments BEFORE transposing
+	pieceslist = [[] for _ in range(keysize)] #PIECESLIST: List of broken segments AFTER transposing, (1,1,1) (2,2,2), etc...
 	for i in range(0, len(bytelines), keysize):
 		chunklist.append(bytelines[i:i+keysize])
-	print(chunklist)
+	#print(chunklist)
 	for chunk in chunklist:
 		for index in range(len(chunk)):
 			pieceslist[index].append(chunk[index])
-	print(pieceslist)
-	return None
-def kcontend(): #finds the keysize using ham
-	
-	return None
+	#print(pieceslist)
+	return chunklist, pieceslist #CONSIDER RETURN, TUPLE?
+def kcontend(bytelines): #finds the keysize using ham, RETURNS SMALLEST 3 NORMALIZED HAMMING DISTANCES AND CORRESPONDING KEYSIZE
+	all = []
+	#first, get sample pairs of every keysize chunk (first 2 keysize sized chunks for every keysize)
+	temp = []
+	for i in range(2,41):
+		keysize = i
+		broken = brk(bytelines, keysize)[0] #makes a chunklist for given i keysize
+		temp.append((broken[0], broken[1], broken[3], broken[4], keysize)) #adds first 4 elements of new chunklist into temp for hamming
+		broken.clear()
+	print(temp)
+	#then, get their hamming distance P.S. ELEMENTS ALREADY PAIRED
+	"""
+	for pair in temp:
+		all.append(ham(pair[0],pair[1],pair[2],pair[3],pair[4]))
+	all.sort(key=lambda x: x[0]) #sorts by smallest to largest normalized hamming distances
+	"""
+	#print(all)
+	return None #all[0], all[1], all[2]
 def engtest(sample): #scores input in english likeness
 	cmnchars = "etaoin shrdlu ETAOIN SHRDLU"
 	score = 0
@@ -161,12 +175,13 @@ def engtest(sample): #scores input in english likeness
 		if j in ")(*&^%$#@~+_{}[]\|<>`":
 			score -=2
 	return score
-def ham(s1, s2, keysize): #hamming distance of 2 input STRINGS
-	s1b = s1.encode()
-	s2b = s2.encode()
-	sum = 0
-	for a, b in zip(s1b, s2b):
+def ham(s1, s2, s3, s4, keysize): #hamming distance of 2 BYTE inputs EDIT: CHANGE TO SECOND HAMMING OPTION
+	sum1, sum2, sum3, sum4, sum5, sum6 = 0, 0, 0, 0, 0, 0
+	for a, b in zip(s1, s2):
 		sum += bin(a^b).count("1")
-	return sum/keysize #returns the iterated normalized sum of differing bytes in the strings
-#print(ham(s1,s2))
-brk()
+	return sum/keysize, keysize #returns the iterated normalized sum of differing bytes in the strings
+
+def main(bytelines):
+	print(kcontend(bytelines))
+	#print(brk(kcontent(bytelines))[1]) #prints pieceslist for top 3 contenders
+main(bytelines)
