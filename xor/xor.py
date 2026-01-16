@@ -125,43 +125,81 @@ unxor(lines)
 """
 #
 import base64
+import itertools
 with open ("hex5.txt","r") as file:
 	lines64 = file.read().strip()
 	bytelines = base64.b64decode(lines64)
 #print(bytelines) #raw bytes, WORK WITH THIS
-maxkeysize = 40
 #s1 = "this is a test"
 #s2 ="wokka wokka!!!"
 
 def brk(bytelines, keysize): #breaks into keysize sizes chunks AND transposes (1,1,1) (2,2,2), etc...
 	chunklist = [] #CHUNKLIST: List of broken segments BEFORE transposing
-	pieceslist = [[] for _ in range(keysize)] #PIECESLIST: List of broken segments AFTER transposing, (1,1,1) (2,2,2), etc...
 	for i in range(0, len(bytelines), keysize):
 		chunklist.append(bytelines[i:i+keysize])
-	#print(chunklist)
-	for chunk in chunklist:
+	print(chunklist)
+	return chunklist
+def brk2(bytelines, keysizes): #second brk function specifically made to break based on top 3 keysizes
+	chunklist1 = []
+	chunklist2 = []
+	chunklist3 = []
+	pieceslist1 = [[] for _ in range(keysizes[0])] #PIECESLIST: List of broken segments AFTER transposing, (1,1,1) (2,2,2), etc...
+	pieceslist2 = [[] for _ in range(keysizes[1])]
+	pieceslist3 = [[] for _ in range(keysizes[2])]
+	for j in range(0,len(bytelines), keysizes[0]):
+		chunklist1.append(bytelines[j:j+keysizes[0]])
+	for j in range(0,len(bytelines), keysizes[1]):
+		chunklist2.append(bytelines[j:j+keysizes[1]])
+	for j in range(0,len(bytelines), keysizes[2]):
+		chunklist3.append(bytelines[j:j+keysizes[2]])
+	print(chunklist2)
+	for chunk in chunklist1:
 		for index in range(len(chunk)):
-			pieceslist[index].append(chunk[index])
-	#print(pieceslist)
-	return chunklist, pieceslist #CONSIDER RETURN, TUPLE?
+			pieceslist1[index].append(chunk[index])
+	for chunk in chunklist2:
+		for index in range(len(chunk)):
+			pieceslist2[index].append(chunk[index])
+	for chunk in chunklist3:
+		for index in range(len(chunk)):
+			pieceslist3[index].append(chunk[index])
+	return pieceslist1, pieceslist2, pieceslist3
+def findkey(bytelines, pieces):
+	result = []
+	keycycle = itertools.cycle([i]) #sets cycle for each line individually
+	print(''.join(result))rslt = [] #works as buffer for holding variables to manipulate
+	rsltcmp = [] #stores final product for later comparison
+	score = 0 #holds score
+	cmnchars = "etaoin shrdlu" #common chars provided on challenge page
+	for i in range(3):
+		for i in range(32, 127): #iterates through all printable ASCII characters (chr(i))
+			key = chr(i).encode() * len(pieceslist[i]) #converts ASCII character to bytes for later XOR
+			msg = a ^ b for a, b in zip(pieceslist[i], key) #XORs bytes of original hex with character
+			dmsg = msg.decode(errors="ignore").lower() #converts the message to a lowercase string for comparison
+			rslt.append((chr(i), dmsg)) #prints xor character and output against encoded string bytes
+			for j in rslt[0][1]: #scores every xor option for english detection
+			
+			rslt.append(score) #stores score in print buffer
+			rsltcmp.append((chr(i),dmsg,score))
+			score = 0
+			print(rslt)
+			rslt.clear()
+	return None
 def kcontend(bytelines): #finds the keysize using ham, RETURNS SMALLEST 3 NORMALIZED HAMMING DISTANCES AND CORRESPONDING KEYSIZE
 	all = []
 	#first, get sample pairs of every keysize chunk (first 2 keysize sized chunks for every keysize)
 	temp = []
 	for i in range(2,41):
 		keysize = i
-		broken = brk(bytelines, keysize)[0] #makes a chunklist for given i keysize
+		broken = brk(bytelines, keysize) #makes a chunklist for given i keysize
 		temp.append((broken[0], broken[1], broken[3], broken[4], keysize)) #adds first 4 elements of new chunklist into temp for hamming
 		broken.clear()
-	print(temp)
+	#print(temp)
 	#then, get their hamming distance P.S. ELEMENTS ALREADY PAIRED
-	"""
 	for pair in temp:
 		all.append(ham(pair[0],pair[1],pair[2],pair[3],pair[4]))
 	all.sort(key=lambda x: x[0]) #sorts by smallest to largest normalized hamming distances
-	"""
 	#print(all)
-	return None #all[0], all[1], all[2]
+	return all
 def engtest(sample): #scores input in english likeness
 	cmnchars = "etaoin shrdlu ETAOIN SHRDLU"
 	score = 0
@@ -178,10 +216,23 @@ def engtest(sample): #scores input in english likeness
 def ham(s1, s2, s3, s4, keysize): #hamming distance of 2 BYTE inputs EDIT: CHANGE TO SECOND HAMMING OPTION
 	sum1, sum2, sum3, sum4, sum5, sum6 = 0, 0, 0, 0, 0, 0
 	for a, b in zip(s1, s2):
-		sum += bin(a^b).count("1")
-	return sum/keysize, keysize #returns the iterated normalized sum of differing bytes in the strings
+		sum1 += (bin(a^b).count("1"))/keysize
+	for a, b in zip(s1, s3):
+		sum2 += (bin(a^b).count("1"))/keysize
+	for a, b in zip(s1, s4):
+		sum3 += (bin(a^b).count("1"))/keysize
+	for a, b in zip(s2, s3):
+		sum4 += (bin(a^b).count("1"))/keysize
+	for a, b in zip(s2, s4):
+		sum5 += (bin(a^b).count("1"))/keysize
+	for a, b in zip(s3, s4):
+		sum6 += (bin(a^b).count("1"))/keysize
+	return sum([sum1, sum2, sum3, sum4, sum5, sum6])/6, keysize #returns the iterated normalized sum of differing bytes in the strings
 
 def main(bytelines):
-	print(kcontend(bytelines))
-	#print(brk(kcontent(bytelines))[1]) #prints pieceslist for top 3 contenders
+	all = kcontend(bytelines)
+	print(all[0],all[1],all[2]) #prints top three contender keysizes and their correlation
+	top3 = brk2(bytelines, (all[0][1],all[1][1],all[2][1]))
+	print(top3)
+	key = findkey(bytelines, top3)
 main(bytelines)
