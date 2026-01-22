@@ -10,52 +10,76 @@ DELETE deletes a student and node from the list
 CARE FOR EMPTY LIST
 */
 void printAll(Node* current){//to have head inputted
-	if(current->getNext()==nullptr){
-		current->getStudent()->print();//prints last element
+	if(current==nullptr){//stops when the end of the list is reaches
+		cout<<"The list is currently empty"<<endl;
 		return;
 	}
-	else if(current->getNext()!=nullptr){
-		current->getStudent()->print();
-		printAll(current->getNext());
-	}
+	current->getStudent()->print();
+	printAll(current->getNext());//recurses with next element
 }
 void addStudent(Node*& h, Node* current, char _firstname[32], char _lastname[32], int _id, float _gpa){//ADDS STUDENT BASED ON ID NUMBER WITH INPUTS FOR NAMES ID AND GPA
-	if(current == nullptr){//if the list is empty
-		Student* s = new Student(_firstname, _lastname, _id, _gpa);
-		Node* n = new Node(s);
-		h = n;
-		cout<<"Student Added"<<endl;
-	}
-	else if(current->getStudent()->getID()==_id){
-		cout<<"Error, no two students can have the same ID"<<endl;
+	if(current==nullptr){
 		return;
 	}
-	else if(current->getStudent()->getID() < _id && current->getNext()==nullptr){//if current ID is smaller and there is no next
+	if(h == nullptr || _id < h->getStudent()->getID()){//if the list is empty, add new element and set as head
+		Student* s = new Student(_firstname, _lastname, _id, _gpa);
+		Node* n = new Node(s);
+		n->setNext(h);
+		h = n;
+		cout<<"Student Added"<<endl;
+		return;
+	}
+	if(current->getStudent()->getID()==_id){//if the added student has a duplicate id number
+		cout<<"Students cannot share the same ID, please try again."<<endl;
+		return;
+	}
+	if(current->getNext()==nullptr){//Add to end
 		Student* s = new Student(_firstname, _lastname, _id, _gpa);
 		Node* n = new Node(s);
 		current->setNext(n);
 		cout<<"Student Added"<<endl;
+		return;
 	}
-	else if(current->getStudent()->getID() < _id && current->getNext()->getStudent()->getID() > _id){//if current ID is smaller and next ID is bigger
+	else if(current->getNext()->getStudent()->getID() > _id){//if next is larger (previous checks make valid, finds first element that has next as larger and stitches in before)
 		Student* s = new Student(_firstname, _lastname, _id, _gpa);
 		Node* n = new Node(s);
 		n->setNext(current->getNext());
 		current->setNext(n);
 		cout<<"Student Added"<<endl;
+		return;
 	}
-	else if(current->getNext()==nullptr){
-		Student* s = new Student(_firstname, _lastname, _id, _gpa);
-		Node* n = new Node(s);
-		n->setNext(current->getNext());
-		current->setNext(n);
-		cout<<"Student Added"<<endl;
-		//addStudent(h, current->getNext(), _firstname, _lastname, _id, _gpa)
-	}
-	else{
-		
-	}
+	addStudent(h,current->getNext(),_firstname,_lastname,_id,_gpa);
 }
 void deleteStudent(Node*& h, Node* current, int target){//DELETES STUDENT, TAKES HEAD/CURRENT AND TARGET ID NUMBER
+	if(current==nullptr){//if the student was not found (current checked by now)
+		cout<<"No matching ID in list, please try again."<<endl;
+		return;
+	}
+	if(h==nullptr){
+		cout<<"List is empty."<<endl;
+		return;
+	}
+	if(current==h && current->getStudent()->getID()==target){//head deletion
+		Node* t = h;
+		h = h->getNext();
+		delete t;
+		cout<<"Student Deleted"<<endl;
+		return;
+	}
+	if(current->getNext()==nullptr){
+		cout<<"No matching ID in list, please try again."<<endl;
+		return;
+	}
+	if(current->getNext()->getStudent()->getID()==target){//if the next student is the delete target
+		Node* t = current->getNext();
+		current->setNext(t->getNext());
+		delete t;
+		cout<<"Student Deleted"<<endl;
+		return;
+	}
+	deleteStudent(h, current->getNext(), target);
+	/*
+	Old logic spaghetti
 	if(current->getNext() != nullptr && current->getStudent()->getID()==target){//if item 1 is the target
 		h = current->getNext();//move list head to next element
 		delete current;//delete target
@@ -67,6 +91,16 @@ void deleteStudent(Node*& h, Node* current, int target){//DELETES STUDENT, TAKES
 		current->setNext(current->getNext()->getNext);//set current next to student after next (next is target), stitches list
 		delete current->getNext();//delete the next student
 	}
+	*/
+}
+
+void clearMemory(Node* current){
+	if(current==nullptr){
+		return;
+	}
+	clearMemory(current->getNext());
+	//delete current->getStudent();
+	delete current;//recursively frees memory
 }
 
 int main()
@@ -103,7 +137,7 @@ int main()
 			cout<<"Invalid input, please try again"<<endl;
 		}
 	}
-	//DELETE ALL | FREE MEMORY
+	clearMemory(h);
 	return 0;
 }
 
