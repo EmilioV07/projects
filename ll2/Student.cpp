@@ -10,5 +10,6 @@ Student::Student(char _firstname, char _lastname, int _id, float _gpa)
 	gpa = _gpa;
 }
 void Student::print(){cout<<"Name: "firstname<<" "<<lastname<<" ID: "<<id<<" GPA: "<<gpa<<endl;}
+int Student::getID(){return id;}
 Student::~Student(){}
 

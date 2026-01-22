@@ -12,6 +12,7 @@ class Student
 	float gpa;
  public:
  	Student(char _firstname, char _lastname, int _id, float _gpa);
+ 	int getID();
  	void print();
 	~Student();
 };
